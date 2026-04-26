@@ -480,15 +480,16 @@ body {
         top: 0;
         width: 280px;
         height: 100vh;
-        background: white !important; /* Solid white background */
+        background: white !important;
         flex-direction: column;
         justify-content: flex-start;
         padding: 5rem 2rem;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.2);
+        box-shadow: -10px 0 30px rgba(0,0,0,0.3);
         transition: right 0.3s ease-in-out;
-        z-index: 2000; /* Highest priority */
+        z-index: 9999 !important; /* Force to absolute top */
         gap: 2rem;
-        display: flex; /* Always flex but hidden by right -100% */
+        display: flex;
+        pointer-events: all; /* Always allow clicks */
     }
 
     .nav-links.show {
@@ -504,8 +505,8 @@ body {
         font-size: 1.2rem;
         display: block;
         padding: 0.5rem 0;
-        color: #111827 !important; /* Dark solid text */
-        font-weight: 600;
+        color: #000000 !important; /* High contrast black */
+        font-weight: 700;
     }
 
     .nav-overlay {
@@ -515,13 +516,15 @@ body {
         left: 0;
         width: 100vw;
         height: 100vh;
-        background: rgba(0,0,0,0.4); /* Slightly darker */
-        backdrop-filter: blur(4px);
-        z-index: 1500; /* Above navbar but below sidebar */
+        background: rgba(0,0,0,0.4);
+        backdrop-filter: blur(5px);
+        z-index: 9000; /* Below sidebar */
+        pointer-events: none; /* Let clicks pass unless visible */
     }
 
     .nav-overlay.show {
         display: block;
+        pointer-events: all;
     }
 
     .info-grid, .features-list { grid-template-columns: 1fr; }
