@@ -1,0 +1,279 @@
+/* ==========================================
+   CSS VARIABLES & GLOBAL STYLES
+   ========================================== */
+:root {
+    --primary-color: #4F46E5;      /* Indigo */
+    --primary-hover: #4338CA;
+    --secondary-color: #10B981;    /* Emerald */
+    --warning-color: #F59E0B;      /* Amber */
+    --danger-color: #EF4444;       /* Red */
+    --bg-color: #F9FAFB;           /* Very Light Gray */
+    --text-color: #1F2937;         /* Dark Gray */
+    --text-muted: #6B7280;
+    --card-bg: #FFFFFF;
+    --border-color: #E5E7EB;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+/* ==========================================
+   NAVIGATION BAR
+   ========================================== */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: var(--card-bg);
+    padding: 1rem 5%;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.navbar .logo {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: var(--text-muted);
+    font-weight: 500;
+    transition: color 0.2s;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+/* ==========================================
+   LAYOUT CONTAINERS & PAGES
+   ========================================== */
+.container {
+    max-width: 1100px;
+    margin: 3rem auto;
+    padding: 0 1.5rem;
+}
+
+.page {
+    display: none;
+    animation: fadeIn 0.3s ease-out;
+}
+
+.page.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.page-header {
+    text-align: center;
+    margin-bottom: 3rem;
+}
+
+.page-header h2 {
+    font-size: 2.5rem;
+    color: var(--text-color);
+    margin-bottom: 0.5rem;
+}
+
+.page-header p {
+    color: var(--text-muted);
+    font-size: 1.1rem;
+}
+
+/* ==========================================
+   HERO SECTION (HOME)
+   ========================================== */
+.hero {
+    text-align: center;
+    padding: 4rem 1rem;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
+.hero h1 {
+    font-size: 3rem;
+    color: var(--text-color);
+    margin-bottom: 1.5rem;
+    line-height: 1.2;
+}
+
+.hero p {
+    font-size: 1.25rem;
+    color: var(--text-muted);
+    max-width: 600px;
+    margin: 0 auto 2.5rem auto;
+}
+
+/* ==========================================
+   BUTTONS
+   ========================================== */
+.btn {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 1rem;
+    text-align: center;
+    transition: all 0.2s;
+}
+
+.btn:active { transform: scale(0.97); }
+.btn-small { padding: 0.4rem 1rem; font-size: 0.9rem; }
+.btn.large { padding: 0.8rem 2rem; font-size: 1.1rem; }
+
+.btn.primary { background-color: var(--primary-color); color: white; }
+.btn.primary:hover { background-color: var(--primary-hover); box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3); }
+
+.btn.secondary { background-color: var(--secondary-color); color: white; }
+.btn.secondary:hover { opacity: 0.9; }
+
+.btn.warning { background-color: var(--warning-color); color: white; }
+.btn.warning:hover { opacity: 0.9; }
+
+.btn.danger { background-color: var(--danger-color); color: white; }
+.btn.danger:hover { opacity: 0.9; }
+
+/* ==========================================
+   AUTH FORMS (LOGIN/REGISTER)
+   ========================================== */
+.auth-container {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.auth-box {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    min-width: 320px;
+    max-width: 450px;
+}
+
+.auth-box h2 {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+}
+
+input {
+    padding: 0.8rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+input:focus {
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+/* ==========================================
+   CARDS & GRIDS (SLOTS)
+   ========================================== */
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 1.5rem;
+}
+
+.card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    border-top: 4px solid var(--border-color);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.card.available { border-top-color: var(--primary-color); }
+.card.released { border-top-color: var(--warning-color); }
+.card.booked { border-top-color: var(--danger-color); }
+
+.card h3 {
+    font-size: 1.25rem;
+    color: var(--text-color);
+}
+
+.card p {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+    flex-grow: 1;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 0.3rem 0.6rem;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+}
+
+.status-available { background: #E0E7FF; color: #3730A3; }
+.status-released { background: #FEF3C7; color: #92400E; }
+.status-booked { background: #FEE2E2; color: #991B1B; }
+
+/* ==========================================
+   ADMIN PANEL
+   ========================================== */
+.admin-card {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+}
+
+.message {
+    margin-top: 1rem;
+    font-weight: 500;
+}
