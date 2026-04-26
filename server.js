@@ -123,6 +123,7 @@ app.get('/slots', getSlots);
 app.post('/book', bookSlot);
 app.post('/release', releaseSlot);
 
+/*
 // Admin route to quickly seed database with some empty slots
 app.post('/admin/seed', async (req, res) => {
     try {
@@ -143,6 +144,7 @@ app.post('/admin/seed', async (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+*/
 
 // Fallback: If no API route matches, send the index.html (Single Page App approach)
 app.get('*', (req, res) => {
