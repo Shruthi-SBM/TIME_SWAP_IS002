@@ -13,8 +13,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ==========================================
 // 1. DATABASE CONNECTION
 // ==========================================
-mongoose.connect('mongodb://127.0.0.1:27017/timeswap')
-  .then(() => console.log('✅ MongoDB Connected to timeswap DB'))
+const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/timeswap';
+
+mongoose.connect(MONGODB_URI)
+  .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.log('❌ MongoDB Connection Error:', err));
 
 // ==========================================
@@ -152,5 +154,5 @@ app.get('*', (req, res) => {
 });
 
 // Start Server
-const PORT = 3000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
