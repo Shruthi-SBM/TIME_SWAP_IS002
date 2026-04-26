@@ -7,12 +7,18 @@
     <link rel="stylesheet" href="style.css">
     <!-- Using a modern font for a professional look -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Suppress favicon to remove cached icons -->
+    <link rel="icon" href="data:,">
 </head>
 <body>
-    <!-- Navbar Navigation -->
-    <nav class="navbar">
-        <div class="logo" onclick="showPage('home')" style="cursor: pointer;">TimeSwap</div>
-        <ul class="nav-links">
+    <!-- Header Wrapper for Unified Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="logo" onclick="showPage('home')" style="cursor: pointer;">TimeSwap</div>
+            <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+        </nav>
+
+        <ul class="nav-links" id="navLinks">
             <li><a href="#" onclick="showPage('home')">Home</a></li>
             <li><a href="#" onclick="showPage('slots')">Available Slots</a></li>
             <li><a href="#" onclick="showPage('dashboard')">My Dashboard</a></li>
@@ -20,7 +26,8 @@
             <li id="auth-link"><a href="#" onclick="showPage('login')" class="btn primary btn-small">Login</a></li>
             <li id="logout-link" style="display:none;"><a href="#" onclick="logout()" class="btn danger btn-small">Logout</a></li>
         </ul>
-    </nav>
+    </header>
+    <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
 
     <!-- Main Content Container -->
     <div class="container">
@@ -204,7 +211,7 @@
                     </div>
                     <div class="stat-card">
                         <span class="stat-value" id="historyCount">0</span>
-                        <span class="stat-label">Total Interactions</span>
+                        <span class="stat-label">Community Impact</span>
                     </div>
                 </div>
 

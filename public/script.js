@@ -1,7 +1,7 @@
 // ==========================================
 // CONFIGURATION & STATE
 // ==========================================
-const API_URL = 'http://localhost:3000';
+const API_URL = window.location.origin; // Dynamically use the current host (localhost or Vercel)
 // Retrieve user from LocalStorage if they logged in previously
 let currentUser = JSON.parse(localStorage.getItem('timeswap_user'));
 
@@ -42,8 +42,32 @@ function showPage(pageId) {
         toggleAuth('login');
     }
 
+    // Auto-close sidebar on mobile
+    const navLinks = document.getElementById('navLinks');
+    const overlay = document.getElementById('navOverlay');
+    if (navLinks.classList.contains('show')) {
+        toggleMenu();
+    }
+
     // Scroll to top when changing pages
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Switches the mobile sidebar
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const overlay = document.getElementById('navOverlay');
+    const menuToggle = document.getElementById('menuToggle');
+    
+    navLinks.classList.toggle('show');
+    overlay.classList.toggle('show');
+    
+    // Change icon if open
+    if (navLinks.classList.contains('show')) {
+        menuToggle.innerText = '✕';
+    } else {
+        menuToggle.innerText = '☰';
+    }
 }
 
 // Smooth scroll to element
@@ -233,8 +257,9 @@ async function loadDashboard() {
 
         // Update Stats
         document.getElementById('bookedCount').innerText = mySlots.length;
-        // Total interactions could be total slots that WERE booked by user (simulated here)
-        document.getElementById('historyCount').innerText = slots.filter(s => s.userId && s.userId._id === currentUser._id).length;
+        // Community Impact: Total slots released in the entire system
+        const communityShared = slots.filter(s => s.status === 'released').length;
+        document.getElementById('historyCount').innerText = communityShared;
 
         if (mySlots.length === 0) {
             container.innerHTML = '<p class="no-results">You have no upcoming appointments booked.</p>';
