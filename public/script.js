@@ -42,8 +42,32 @@ function showPage(pageId) {
         toggleAuth('login');
     }
 
+    // Auto-close sidebar on mobile
+    const navLinks = document.getElementById('navLinks');
+    const overlay = document.getElementById('navOverlay');
+    if (navLinks.classList.contains('show')) {
+        toggleMenu();
+    }
+
     // Scroll to top when changing pages
     window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Switches the mobile sidebar
+function toggleMenu() {
+    const navLinks = document.getElementById('navLinks');
+    const overlay = document.getElementById('navOverlay');
+    const menuToggle = document.getElementById('menuToggle');
+    
+    navLinks.classList.toggle('show');
+    overlay.classList.toggle('show');
+    
+    // Change icon if open
+    if (navLinks.classList.contains('show')) {
+        menuToggle.innerText = '✕';
+    } else {
+        menuToggle.innerText = '☰';
+    }
 }
 
 // Smooth scroll to element

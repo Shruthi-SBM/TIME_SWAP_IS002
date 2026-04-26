@@ -14,15 +14,19 @@
     <!-- Navbar Navigation -->
     <nav class="navbar">
         <div class="logo" onclick="showPage('home')" style="cursor: pointer;">TimeSwap</div>
-        <ul class="nav-links">
-            <li><a href="#" onclick="showPage('home')">Home</a></li>
-            <li><a href="#" onclick="showPage('slots')">Available Slots</a></li>
-            <li><a href="#" onclick="showPage('dashboard')">My Dashboard</a></li>
-            <!-- <li><a href="#" onclick="showPage('admin')">Admin</a></li> -->
-            <li id="auth-link"><a href="#" onclick="showPage('login')" class="btn primary btn-small">Login</a></li>
-            <li id="logout-link" style="display:none;"><a href="#" onclick="logout()" class="btn danger btn-small">Logout</a></li>
-        </ul>
+        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
     </nav>
+
+    <!-- Sidebar moved outside for proper stacking -->
+    <ul class="nav-links" id="navLinks">
+        <li><a href="#" onclick="showPage('home')">Home</a></li>
+        <li><a href="#" onclick="showPage('slots')">Available Slots</a></li>
+        <li><a href="#" onclick="showPage('dashboard')">My Dashboard</a></li>
+        <!-- <li><a href="#" onclick="showPage('admin')">Admin</a></li> -->
+        <li id="auth-link"><a href="#" onclick="showPage('login')" class="btn primary btn-small">Login</a></li>
+        <li id="logout-link" style="display:none;"><a href="#" onclick="logout()" class="btn danger btn-small">Logout</a></li>
+    </ul>
+    <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
 
     <!-- Main Content Container -->
     <div class="container">
