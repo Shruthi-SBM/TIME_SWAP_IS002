@@ -13,9 +13,14 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ==========================================
 // 1. DATABASE CONNECTION
 // ==========================================
-const MONGODB_URI = process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/timeswap';
+const MONGODB_URI = process.env.MONGODB_URI;
 
-mongoose.connect(MONGODB_URI)
+if (!MONGODB_URI) {
+    console.error('❌ CRITICAL ERROR: MONGODB_URI environment variable is missing!');
+    console.log('Locally, you should use MongoDB Compass. On Vercel, you MUST use MongoDB Atlas.');
+}
+
+mongoose.connect(MONGODB_URI || 'mongodb://127.0.0.1:27017/timeswap')
   .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => console.log('❌ MongoDB Connection Error:', err));
 
