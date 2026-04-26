@@ -11,21 +11,22 @@
     <link rel="icon" href="data:,">
 </head>
 <body>
-    <!-- Navbar Navigation -->
-    <nav class="navbar">
-        <div class="logo" onclick="showPage('home')" style="cursor: pointer;">TimeSwap</div>
-        <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
-    </nav>
+    <!-- Header Wrapper for Unified Navigation -->
+    <header class="main-header">
+        <nav class="navbar">
+            <div class="logo" onclick="showPage('home')" style="cursor: pointer;">TimeSwap</div>
+            <button class="menu-toggle" id="menuToggle" onclick="toggleMenu()">☰</button>
+        </nav>
 
-    <!-- Sidebar moved outside for proper stacking -->
-    <ul class="nav-links" id="navLinks">
-        <li><a href="#" onclick="showPage('home')">Home</a></li>
-        <li><a href="#" onclick="showPage('slots')">Available Slots</a></li>
-        <li><a href="#" onclick="showPage('dashboard')">My Dashboard</a></li>
-        <!-- <li><a href="#" onclick="showPage('admin')">Admin</a></li> -->
-        <li id="auth-link"><a href="#" onclick="showPage('login')" class="btn primary btn-small">Login</a></li>
-        <li id="logout-link" style="display:none;"><a href="#" onclick="logout()" class="btn danger btn-small">Logout</a></li>
-    </ul>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#" onclick="showPage('home')">Home</a></li>
+            <li><a href="#" onclick="showPage('slots')">Available Slots</a></li>
+            <li><a href="#" onclick="showPage('dashboard')">My Dashboard</a></li>
+            <!-- <li><a href="#" onclick="showPage('admin')">Admin</a></li> -->
+            <li id="auth-link"><a href="#" onclick="showPage('login')" class="btn primary btn-small">Login</a></li>
+            <li id="logout-link" style="display:none;"><a href="#" onclick="logout()" class="btn danger btn-small">Logout</a></li>
+        </ul>
+    </header>
     <div id="navOverlay" class="nav-overlay" onclick="toggleMenu()"></div>
 
     <!-- Main Content Container -->
