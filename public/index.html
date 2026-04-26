@@ -11,12 +11,12 @@
 <body>
     <!-- Navbar Navigation -->
     <nav class="navbar">
-        <div class="logo">TimeSwap ⏳</div>
+        <div class="logo" onclick="showPage('home')" style="cursor: pointer;">TimeSwap</div>
         <ul class="nav-links">
             <li><a href="#" onclick="showPage('home')">Home</a></li>
             <li><a href="#" onclick="showPage('slots')">Available Slots</a></li>
             <li><a href="#" onclick="showPage('dashboard')">My Dashboard</a></li>
-            <li><a href="#" onclick="showPage('admin')">Admin</a></li>
+            <!-- <li><a href="#" onclick="showPage('admin')">Admin</a></li> -->
             <li id="auth-link"><a href="#" onclick="showPage('login')" class="btn primary btn-small">Login</a></li>
             <li id="logout-link" style="display:none;"><a href="#" onclick="logout()" class="btn danger btn-small">Logout</a></li>
         </ul>
@@ -28,26 +28,130 @@
         <!-- 1. HOME PAGE -->
         <div id="home" class="page active">
             <div class="hero">
+                <span class="badge">Optimize Your Schedule</span>
                 <h1>Don't let your booked time go to waste.</h1>
-                <p>Release your unused appointments so others can claim them instantly. Join TimeSwap and help optimize schedules!</p>
-                <button class="btn primary large" onclick="showPage('slots')">View Available Slots</button>
+                <p>Release your unused appointments so others can claim them instantly. Join TimeSwap and help maximize resource utilization for everyone.</p>
+                <div class="hero-btns">
+                    <button class="btn primary large" onclick="showPage('slots')">Browse Slots</button>
+                    <button class="btn outline large" onclick="scrollToSection('about')">Learn More</button>
+                </div>
             </div>
+
+            <!-- About Section -->
+            <section id="about" class="info-section">
+                <div class="section-content">
+                    <div class="info-grid">
+                        <div class="info-text">
+                            <h2>What is TimeSwap?</h2>
+                            <p>TimeSwap is a professional slot-sharing system designed to solve the problem of unused appointments in services like doctors, salons, and gyms. Many valuable time slots go to waste when users cannot make it, while others struggle to find urgent bookings.</p>
+                            <h3>The Problem</h3>
+                            <p>Cancellations and schedule changes often leave gaps in service providers' calendars. Without a redistribution system, these slots remain empty, causing revenue loss for businesses and frustration for users who need appointments.</p>
+                        </div>
+                        <div class="info-image">
+                            <div class="image-placeholder">
+                                <img src="https://images.unsplash.com/photo-1506784983877-45594efa4cbe?auto=format&fit=crop&q=80&w=600" alt="Calendar Schedule">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Mission/Objective Section -->
+            <section class="mission-section">
+                <h2>Our Mission</h2>
+                <div class="mission-grid">
+                    <div class="mission-card">
+                        <div class="icon">🎯</div>
+                        <h3>Efficiency</h3>
+                        <p>To develop a system for sharing unused time slots and improving utilization.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="icon">⚡</div>
+                        <h3>Instant Access</h3>
+                        <p>Allow users to book and release slots easily with real-time updates.</p>
+                    </div>
+                    <div class="mission-card">
+                        <div class="icon">🤝</div>
+                        <h3>Community</h3>
+                        <p>Provide a simple and user-friendly interface for seamless interaction.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- How it Works Section -->
+            <section class="how-it-works">
+                <h2>How It Works</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-num">1</div>
+                        <h4>Register & Login</h4>
+                        <p>Create your account and securely sign in to access the system.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">2</div>
+                        <h4>Browse & Book</h4>
+                        <p>View all available slots in real-time and book the one that suits you.</p>
+                    </div>
+                    <div class="step">
+                        <div class="step-num">3</div>
+                        <h4>Manage & Release</h4>
+                        <p>If your plans change, release your slot instantly for others to claim.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Key Features Section -->
+            <section class="features-section">
+                <h2>Key Functionalities</h2>
+                <div class="features-list">
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <div>
+                            <h4>Smart Booking Logic</h4>
+                            <p>Only available or released slots can be booked, ensuring no double bookings.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <div>
+                            <h4>Dynamic Status Updates</h4>
+                            <p>Slots automatically change status from available to booked or released.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <div>
+                            <h4>Personal Dashboard</h4>
+                            <p>Track your own bookings and manage them in one centralized location.</p>
+                        </div>
+                    </div>
+                    <div class="feature-item">
+                        <span class="check">✓</span>
+                        <div>
+                            <h4>Secure Redistribution</h4>
+                            <p>Only the original booker can release a slot, maintaining system integrity.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
         </div>
 
-        <!-- 2. LOGIN / REGISTER PAGE -->
+        <!-- 2. AUTHENTICATION PAGE (LOGIN / REGISTER) -->
         <div id="login" class="page">
             <div class="auth-container">
-                <!-- Login Form -->
-                <div class="auth-box">
+                <!-- Login Box -->
+                <div id="login-box" class="auth-box">
                     <h2>Login</h2>
                     <form id="loginForm" onsubmit="handleLogin(event)">
                         <input type="email" id="loginEmail" placeholder="Email Address" required>
                         <input type="password" id="loginPassword" placeholder="Password" required>
                         <button type="submit" class="btn primary">Login</button>
                     </form>
+                    <p class="auth-toggle">Don't have an account? <a href="#" onclick="toggleAuth('register')">Create one here</a></p>
                 </div>
-                <!-- Register Form -->
-                <div class="auth-box">
+
+                <!-- Register Box (Hidden by default) -->
+                <div id="register-box" class="auth-box" style="display: none;">
                     <h2>Create Account</h2>
                     <form id="registerForm" onsubmit="handleRegister(event)">
                         <input type="text" id="regName" placeholder="Full Name" required>
@@ -55,6 +159,7 @@
                         <input type="password" id="regPassword" placeholder="Password" required>
                         <button type="submit" class="btn secondary">Register</button>
                     </form>
+                    <p class="auth-toggle">Already have an account? <a href="#" onclick="toggleAuth('login')">Login here</a></p>
                 </div>
             </div>
         </div>
@@ -65,6 +170,20 @@
                 <h2>Available Time Slots</h2>
                 <p>Browse and book open or newly released slots.</p>
             </div>
+            
+            <div class="filter-bar">
+                <div class="search-input">
+                    <input type="text" id="slotSearch" placeholder="Search by time (e.g. 09:00)..." onkeyup="filterSlots()">
+                </div>
+                <div class="filter-options">
+                    <select id="statusFilter" onchange="filterSlots()">
+                        <option value="all">All Available</option>
+                        <option value="available">Standard Only</option>
+                        <option value="released">Released Only</option>
+                    </select>
+                </div>
+            </div>
+
             <div id="slots-container" class="grid">
                 <!-- Slots will be dynamically injected here by JavaScript -->
             </div>
@@ -78,6 +197,17 @@
             </div>
             
             <div class="dashboard-section">
+                <div class="stats-overview">
+                    <div class="stat-card">
+                        <span class="stat-value" id="bookedCount">0</span>
+                        <span class="stat-label">Active Bookings</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-value" id="historyCount">0</span>
+                        <span class="stat-label">Total Interactions</span>
+                    </div>
+                </div>
+
                 <h3>My Booked Appointments</h3>
                 <p class="subtitle">If you can't make it, please release the slot for someone else.</p>
                 <div id="my-slots-container" class="grid">
@@ -86,7 +216,7 @@
             </div>
         </div>
 
-        <!-- 5. ADMIN DASHBOARD PAGE -->
+        <!-- 5. ADMIN DASHBOARD PAGE (Commented out for now)
         <div id="admin" class="page">
             <div class="page-header">
                 <h2>Admin Control Panel</h2>
@@ -99,7 +229,25 @@
                 <button class="btn warning" onclick="seedDatabase()">Generate Sample Slots</button>
                 <div id="admin-message" class="message"></div>
             </div>
+        -->
+
+    </div>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-logo">TimeSwap</div>
+            <p>Full-stack slot-sharing system built with MongoDB, Express, and Node.js.</p>
+            <div class="footer-links">
+                <a href="#" onclick="showPage('home')">Home</a>
+                <a href="#" onclick="showPage('slots')">Slots</a>
+                <a href="#" onclick="showPage('dashboard')">Dashboard</a>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2026 TimeSwap Project. All rights reserved.
+            </div>
         </div>
+    </footer>
 
     </div>
 

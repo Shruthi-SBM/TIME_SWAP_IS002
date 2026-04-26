@@ -22,6 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 // NAVIGATION & UI LOGIC
 // ==========================================
 
+let allSlots = []; // Store slots for filtering
+
 // Handles switching between virtual "pages"
 function showPage(pageId) {
     // Hide all pages
@@ -34,6 +36,36 @@ function showPage(pageId) {
     // Trigger specific logic based on the page opened
     if (pageId === 'slots') fetchSlots();
     if (pageId === 'dashboard') loadDashboard();
+    
+    // Reset auth view to login if entering login page
+    if (pageId === 'login') {
+        toggleAuth('login');
+    }
+
+    // Scroll to top when changing pages
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// Smooth scroll to element
+function scrollToSection(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' });
+    }
+}
+
+// Switches between Login and Register boxes
+function toggleAuth(mode) {
+    const loginBox = document.getElementById('login-box');
+    const registerBox = document.getElementById('register-box');
+
+    if (mode === 'register') {
+        loginBox.style.display = 'none';
+        registerBox.style.display = 'block';
+    } else {
+        loginBox.style.display = 'block';
+        registerBox.style.display = 'none';
+    }
 }
 
 // Updates navbar to show/hide Login and Logout buttons
@@ -67,7 +99,7 @@ async function handleRegister(e) {
 
         if (res.ok) {
             alert('Registration successful! Please login.');
-            document.getElementById('registerForm').reset();
+            toggleAuth('login');
         } else {
             alert(data.message || 'Error registering');
         }
@@ -121,47 +153,59 @@ function logout() {
 async function fetchSlots() {
     try {
         const res = await fetch(`${API_URL}/slots`);
-        const slots = await res.json();
-        const container = document.getElementById('slots-container');
-        container.innerHTML = ''; // Clear loading state
-
-        if (slots.length === 0) {
-            container.innerHTML = '<p>No slots found. Go to the Admin tab to seed database.</p>';
-            return;
-        }
-
-        let hasAvailableSlots = false;
-
-        slots.forEach(slot => {
-            // Only render slots that can be booked
-            if (slot.status === 'available' || slot.status === 'released') {
-                hasAvailableSlots = true;
-                const card = document.createElement('div');
-                card.className = `card ${slot.status}`;
-
-                const isReleased = slot.status === 'released';
-                const message = isReleased
-                    ? 'Someone freed up this slot. Claim it quickly!'
-                    : 'Standard available time slot.';
-
-                card.innerHTML = `
-                    <h3>🕒 ${slot.time}</h3>
-                    <span class="status-badge status-${slot.status}">${slot.status}</span>
-                    <p>${message}</p>
-                    <button class="btn primary" onclick="bookSlot('${slot._id}')">Book Now</button>
-                `;
-                container.appendChild(card);
-            }
-        });
-
-        if (!hasAvailableSlots) {
-            container.innerHTML = '<p>No slots currently available. Please check back later!</p>';
-        }
-
+        allSlots = await res.json();
+        renderSlots(allSlots);
     } catch (error) {
         console.error('Error fetching slots:', error);
         document.getElementById('slots-container').innerHTML = '<p style="color:red">Failed to connect to server. Is Node.js running?</p>';
     }
+}
+
+// Filters slots based on search and status
+function filterSlots() {
+    const searchTerm = document.getElementById('slotSearch').value.toLowerCase();
+    const statusFilter = document.getElementById('statusFilter').value;
+
+    const filtered = allSlots.filter(slot => {
+        const matchesSearch = slot.time.toLowerCase().includes(searchTerm);
+        const matchesStatus = statusFilter === 'all' 
+            ? (slot.status === 'available' || slot.status === 'released')
+            : slot.status === statusFilter;
+        return matchesSearch && matchesStatus;
+    });
+
+    renderSlots(filtered);
+}
+
+// Helper to render slots to the container
+function renderSlots(slotsToRender) {
+    const container = document.getElementById('slots-container');
+    container.innerHTML = ''; 
+
+    const bookableSlots = slotsToRender.filter(s => s.status === 'available' || s.status === 'released');
+
+    if (bookableSlots.length === 0) {
+        container.innerHTML = '<p class="no-results">No matching available slots found.</p>';
+        return;
+    }
+
+    bookableSlots.forEach(slot => {
+        const card = document.createElement('div');
+        card.className = `card ${slot.status}`;
+
+        const isReleased = slot.status === 'released';
+        const message = isReleased
+            ? 'Someone freed up this slot. Claim it quickly!'
+            : 'Standard available time slot.';
+
+        card.innerHTML = `
+            <h3>🕒 ${slot.time}</h3>
+            <span class="status-badge status-${slot.status}">${slot.status}</span>
+            <p>${message}</p>
+            <button class="btn primary" onclick="bookSlot('${slot._id}')">Book Now</button>
+        `;
+        container.appendChild(card);
+    });
 }
 
 // Load user's booked slots into the dashboard
@@ -187,8 +231,13 @@ async function loadDashboard() {
             slot.status === 'booked'
         );
 
+        // Update Stats
+        document.getElementById('bookedCount').innerText = mySlots.length;
+        // Total interactions could be total slots that WERE booked by user (simulated here)
+        document.getElementById('historyCount').innerText = slots.filter(s => s.userId && s.userId._id === currentUser._id).length;
+
         if (mySlots.length === 0) {
-            container.innerHTML = '<p>You have no upcoming appointments booked.</p>';
+            container.innerHTML = '<p class="no-results">You have no upcoming appointments booked.</p>';
             return;
         }
 
@@ -261,8 +310,9 @@ async function releaseSlot(slotId) {
     }
 }
 
+/*
 // ==========================================
-// ADMIN LOGIC
+// ADMIN LOGIC (Commented out for now)
 // ==========================================
 
 // Call admin seed endpoint to create dummy data
@@ -288,3 +338,4 @@ async function seedDatabase() {
         msgElement.style.color = 'red';
     }
 }
+*/
